@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AssemblyName>IslandDesk</AssemblyName>
+    <RootNamespace>IslandDesk</RootNamespace>
+    <Version>1.3.1</Version>
+  </PropertyGroup>
+
+  <!-- The Studio app is a separate WPF project in the solution.
+       Exclude its source and XAML from this project's SDK default globs. -->
+  <ItemGroup>
+    <Compile Remove="Studio\**\*.cs" />
+    <Page Remove="Studio\**\*.xaml" />
+    <ApplicationDefinition Remove="Studio\**\*.xaml" />
+    <Resource Remove="Studio\**\*.xaml" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="System.Management" Version="10.0.2" />
+    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.6" />
+  </ItemGroup>
+</Project>

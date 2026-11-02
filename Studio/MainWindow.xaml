@@ -1,0 +1,363 @@
+<Window x:Class="IslandDeskStudio.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Island Desk Studio" Width="1120" Height="820"
+        MinWidth="980" MinHeight="720"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource StudioBg}"
+        UseLayoutRounding="True" SnapsToDevicePixels="True">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource StudioText}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="{DynamicResource StudioText}" />
+            <Setter Property="Background" Value="{DynamicResource StudioControl}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource StudioStroke}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="14,9" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonSurface" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="11" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="ButtonSurface" Property="Opacity" Value="0.84" /></Trigger>
+                            <Trigger Property="IsPressed" Value="True"><Setter TargetName="ButtonSurface" Property="Opacity" Value="0.68" /></Trigger>
+                            <Trigger Property="IsEnabled" Value="False"><Setter TargetName="ButtonSurface" Property="Opacity" Value="0.4" /></Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Foreground" Value="{DynamicResource StudioText}" />
+            <Setter Property="Background" Value="{DynamicResource StudioControl}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource StudioStroke}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="10,8" />
+            <Setter Property="CaretBrush" Value="{DynamicResource StudioText}" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Foreground" Value="{DynamicResource StudioText}" />
+            <Setter Property="Background" Value="{DynamicResource StudioControl}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource StudioStroke}" />
+            <Setter Property="Padding" Value="8,6" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Foreground" Value="{DynamicResource StudioText}" />
+                        <Setter Property="Background" Value="{DynamicResource StudioPanel}" />
+                        <Setter Property="Padding" Value="9,7" />
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="Foreground" Value="{DynamicResource StudioText}" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Margin" Value="0,5,12,5" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="Slider">
+            <Setter Property="Foreground" Value="{DynamicResource StudioAccent}" />
+            <Setter Property="Margin" Value="0,7,0,4" />
+        </Style>
+        <Style TargetType="ListBox">
+            <Setter Property="Foreground" Value="{DynamicResource StudioText}" />
+            <Setter Property="Background" Value="{DynamicResource StudioControl}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource StudioStroke}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="5" />
+        </Style>
+        <Style TargetType="TabControl">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style TargetType="TabItem">
+            <Setter Property="Foreground" Value="{DynamicResource StudioMuted}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Padding" Value="16,11" />
+            <Setter Property="Margin" Value="0,0,7,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="TabSurface" Background="{TemplateBinding Background}" CornerRadius="11" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter ContentSource="Header" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="TabSurface" Property="Background" Value="{DynamicResource StudioSelected}" />
+                                <Setter Property="Foreground" Value="{DynamicResource StudioText}" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="TabSurface" Property="Opacity" Value="0.82" /></Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="SectionTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="19" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="0,0,0,5" />
+        </Style>
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource StudioMuted}" />
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="0,12,0,5" />
+        </Style>
+        <Style x:Key="SurfaceCard" TargetType="Border">
+            <Setter Property="Background" Value="{DynamicResource StudioPanel}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource StudioStroke}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="17" />
+            <Setter Property="Padding" Value="18" />
+            <Setter Property="Margin" Value="0,0,14,14" />
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0,0,0,19">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Border Width="43" Height="43" CornerRadius="14" Background="{DynamicResource StudioSelected}" Margin="0,0,13,0">
+                    <TextBlock Text="✦" Foreground="{DynamicResource StudioAccent}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+                <StackPanel>
+                    <TextBlock Text="ISLAND DESK" Foreground="{DynamicResource StudioAccent}" FontSize="10" FontWeight="Bold" />
+                    <TextBlock Text="Studio" FontSize="27" FontWeight="SemiBold" Margin="0,-2,0,0" />
+                    <TextBlock Text="Preview your style here, then save to update the island." Foreground="{DynamicResource StudioMuted}" FontSize="11" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="LANGUAGE" Style="{StaticResource FieldLabel}" Margin="0,0,9,0" VerticalAlignment="Center" />
+                <ComboBox x:Name="LanguageCombo" Width="125" SelectionChanged="LanguageCombo_SelectionChanged">
+                    <ComboBoxItem Content="English" Tag="en" />
+                    <ComboBoxItem Content="Русский" Tag="ru" />
+                </ComboBox>
+            </StackPanel>
+        </Grid>
+
+        <Border Grid.Row="1" Style="{StaticResource SurfaceCard}" Margin="0,0,0,15" Padding="14,12">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Ellipse Width="7" Height="7" Fill="#FF58D6A0" Margin="0,0,9,0" />
+                    <TextBlock Text="LIVE PREVIEW" Foreground="{DynamicResource StudioMuted}" FontSize="9" FontWeight="Bold" VerticalAlignment="Center" />
+                    <Border x:Name="IslandPreview" Width="340" Height="43" CornerRadius="22" Background="#D9171A24" BorderBrush="#55FFFFFF" BorderThickness="1" Margin="18,0,0,0" Padding="15,7">
+                        <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <TextBlock Text="✦" Foreground="{DynamicResource StudioAccent}" FontSize="17" VerticalAlignment="Center" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="CPU" Foreground="{DynamicResource StudioMuted}" FontSize="9" Margin="0,0,5,0" />
+                                <TextBlock Text="18%" FontSize="10" FontWeight="SemiBold" Margin="0,0,12,0" />
+                                <TextBlock Text="GPU" Foreground="{DynamicResource StudioMuted}" FontSize="9" Margin="0,0,5,0" />
+                                <TextBlock Text="42%" FontSize="10" FontWeight="SemiBold" />
+                            </StackPanel>
+                            <TextBlock x:Name="PreviewBrand" Grid.Column="2" Text="ISLAND DESK" Foreground="{DynamicResource StudioMuted}" FontSize="8" VerticalAlignment="Center" />
+                        </Grid>
+                    </Border>
+                </StackPanel>
+                <TextBlock Grid.Column="1" x:Name="PreviewSizeLabel" Text="760 px" Foreground="{DynamicResource StudioMuted}" VerticalAlignment="Center" FontSize="11" />
+            </Grid>
+        </Border>
+
+        <TabControl Grid.Row="2">
+            <TabItem Header="Appearance">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid Margin="5,16,5,5">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource SurfaceCard}">
+                            <StackPanel>
+                                <TextBlock Text="Island surface" Style="{StaticResource SectionTitle}" />
+                                <TextBlock Text="A quiet glass capsule that stays out of your way." Foreground="{DynamicResource StudioMuted}" FontSize="11" />
+                                <TextBlock Text="THEME" Style="{StaticResource FieldLabel}" />
+                                <ComboBox x:Name="ThemeCombo" SelectedIndex="0">
+                                    <ComboBoxItem Content="Dark" Tag="Dark" />
+                                    <ComboBoxItem Content="Light" Tag="Light" />
+                                </ComboBox>
+                                <TextBlock Text="ACCENT COLOR · #RRGGBB" Style="{StaticResource FieldLabel}" />
+                                <TextBox x:Name="AccentColorBox" Text="#A78BFA" TextChanged="PreviewTextChanged" />
+                                <TextBlock Text="GLASS TINT · #RRGGBB" Style="{StaticResource FieldLabel}" />
+                                <TextBox x:Name="GlassTintColorBox" Text="#171A24" TextChanged="PreviewTextChanged" />
+                                <TextBlock Text="GLASS OPACITY" Style="{StaticResource FieldLabel}" />
+                                <Slider x:Name="TransparencySlider" Minimum="0" Maximum="1" TickFrequency="0.05" ValueChanged="PreviewChanged" />
+                                <TextBlock x:Name="TransparencyValue" Text="78% · 0% is fully transparent" Foreground="{DynamicResource StudioMuted}" FontSize="10" />
+                                <TextBlock Text="CORNER RADIUS" Style="{StaticResource FieldLabel}" />
+                                <Slider x:Name="RadiusSlider" Minimum="12" Maximum="42" TickFrequency="1" ValueChanged="PreviewChanged" />
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource SurfaceCard}" Margin="0,0,0,14">
+                            <StackPanel>
+                                <TextBlock Text="Layout &amp; motion" Style="{StaticResource SectionTitle}" />
+                                <TextBlock Text="Compact glass, quiet motion and a clear visual hierarchy." Foreground="{DynamicResource StudioMuted}" FontSize="11" />
+                                <TextBlock Text="ISLAND WIDTH" Style="{StaticResource FieldLabel}" />
+                                <Slider x:Name="IslandWidthSlider" Minimum="440" Maximum="1320" TickFrequency="20" ValueChanged="PreviewChanged" />
+                                <TextBlock x:Name="IslandWidthValue" Text="760 px" Foreground="{DynamicResource StudioMuted}" FontSize="10" />
+                                <CheckBox x:Name="AlwaysOnTopCheck" Content="Keep island above normal windows" />
+                                <CheckBox x:Name="AnimationsCheck" Content="Enable island animations" />
+                                <CheckBox x:Name="NotificationAnimationsCheck" Content="Animate notification entrances" />
+                                <CheckBox x:Name="BrandAnimationCheck" Content="Continuously animate the brand text" />
+                                <TextBlock Text="ANIMATION DURATION" Style="{StaticResource FieldLabel}" />
+                                <Slider x:Name="DurationSlider" Minimum="120" Maximum="800" TickFrequency="20" />
+                                <TextBlock Text="BRAND TEXT" Style="{StaticResource FieldLabel}" />
+                                <TextBox x:Name="BrandTextBox" Text="ISLAND DESK" TextChanged="PreviewTextChanged" />
+                                <CheckBox x:Name="LaunchOnStartupCheck" Content="Launch Island Desk with Windows" Margin="0,13,0,0" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Widgets">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid Margin="5,16,5,5">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="1.1*"/><ColumnDefinition Width="0.9*"/></Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource SurfaceCard}">
+                            <StackPanel>
+                                <TextBlock Text="Available widgets" Style="{StaticResource SectionTitle}" />
+                                <TextBlock Text="Choose what appears in the island and arrange the order below." Foreground="{DynamicResource StudioMuted}" FontSize="11" Margin="0,0,0,12" />
+                                <UniformGrid Columns="2">
+                                    <CheckBox x:Name="ShowCpuCheck" Content="CPU load" />
+                                    <CheckBox x:Name="ShowRamCheck" Content="Memory" />
+                                    <CheckBox x:Name="ShowGpuCheck" Content="GPU load" />
+                                    <CheckBox x:Name="ShowFpsCheck" Content="FPS · RTSS" />
+                                    <CheckBox x:Name="ShowCpuTempCheck" Content="CPU temperature" />
+                                    <CheckBox x:Name="ShowGpuTempCheck" Content="GPU temperature" />
+                                    <CheckBox x:Name="ShowClockCheck" Content="Clock &amp; date" />
+                                    <CheckBox x:Name="ShowMusicCheck" Content="Now playing" />
+                                    <CheckBox x:Name="ShowAlbumArtCheck" Content="Album artwork" />
+                                    <CheckBox x:Name="ShowNotificationsCheck" Content="Notifications" />
+                                    <CheckBox x:Name="ShowEmojiCheck" Content="Emoji shortcut" />
+                                    <CheckBox x:Name="ShowScreenshotCheck" Content="Snipping Tool" />
+                                </UniformGrid>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource SurfaceCard}" Margin="0,0,0,14">
+                            <StackPanel>
+                                <TextBlock Text="Widget order" Style="{StaticResource SectionTitle}" />
+                                <TextBlock Text="Select a widget and move it up or down. The order is used in both compact and expanded system views." Foreground="{DynamicResource StudioMuted}" FontSize="11" Margin="0,0,0,12" />
+                                <ListBox x:Name="WidgetOrderList" Height="270" />
+                                <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                                    <Button Content="↑ Move up" Click="WidgetUp_Click" Margin="0,0,8,0" />
+                                    <Button Content="↓ Move down" Click="WidgetDown_Click" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Gaming &amp; alerts">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid Margin="5,16,5,5">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource SurfaceCard}">
+                            <StackPanel>
+                                <TextBlock Text="Gaming mode" Style="{StaticResource SectionTitle}" />
+                                <TextBlock Text="A tiny glowing marker, optional single metric, and notification toasts only." Foreground="{DynamicResource StudioMuted}" FontSize="11" Margin="0,0,0,12" />
+                                <CheckBox x:Name="GamingModeCheck" Content="Enable gaming mode" />
+                                <CheckBox x:Name="GamingAutoFullscreenCheck" Content="Enable automatically for fullscreen apps" />
+                                <TextBlock Text="GAMING WIDGET" Style="{StaticResource FieldLabel}" />
+                                <ComboBox x:Name="GamingWidgetCombo">
+                                    <ComboBoxItem Content="No widget · glow only" Tag="None" />
+                                    <ComboBoxItem Content="CPU load" Tag="Cpu" />
+                                    <ComboBoxItem Content="GPU load" Tag="Gpu" />
+                                    <ComboBoxItem Content="CPU temperature" Tag="CpuTemperature" />
+                                    <ComboBoxItem Content="GPU temperature" Tag="GpuTemperature" />
+                                </ComboBox>
+                                <TextBlock Text="AUTO-ENABLE FOR THESE PROCESSES · EXE NAME" Style="{StaticResource FieldLabel}" />
+                                <TextBox x:Name="GamingModeAppsBox" Height="88" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                                <TextBlock Text="Example: lmu.exe, ac2-win64-shipping.exe. Use borderless windowed mode for the best overlay compatibility." Foreground="{DynamicResource StudioMuted}" FontSize="10" Margin="0,8,0,0" />
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource SurfaceCard}" Margin="0,0,0,14">
+                            <StackPanel>
+                                <TextBlock Text="Notification behavior" Style="{StaticResource SectionTitle}" />
+                                <TextBlock Text="Let notifications slide out from the top, then expand only when you ask." Foreground="{DynamicResource StudioMuted}" FontSize="11" Margin="0,0,0,12" />
+                                <CheckBox x:Name="HideFullscreenCheck" Content="Hide island in fullscreen apps (overrides gaming mode)" />
+                                <TextBlock Text="MUTE NOTIFICATIONS FROM THESE APPS" Style="{StaticResource FieldLabel}" />
+                                <TextBox x:Name="ExcludedAppsBox" Height="115" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                                <TextBlock Text="ONE PROCESS NAME PER LINE · OPTIONAL" Style="{StaticResource FieldLabel}" />
+                                <TextBlock Text="Hide island in apps" Foreground="{DynamicResource StudioMuted}" FontSize="10" />
+                                <TextBox x:Name="HideAppsBox" Height="66" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Margin="0,5,0,0" />
+                                <TextBlock Text="Auto-expand in apps" Foreground="{DynamicResource StudioMuted}" FontSize="10" Margin="0,10,0,0" />
+                                <TextBox x:Name="ExpandAppsBox" Height="66" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Margin="0,5,0,0" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Hotkeys &amp; audio">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid Margin="5,16,5,5">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="0.9*"/><ColumnDefinition Width="1.1*"/></Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource SurfaceCard}">
+                            <StackPanel>
+                                <TextBlock Text="Global hotkeys" Style="{StaticResource SectionTitle}" />
+                                <TextBlock Text="Use Ctrl, Shift, Alt and a key. Hotkeys work while another app is focused." Foreground="{DynamicResource StudioMuted}" FontSize="11" Margin="0,0,0,12" />
+                                <TextBlock Text="TOGGLE ISLAND" Style="{StaticResource FieldLabel}" /><TextBox x:Name="ToggleHotkeyBox" />
+                                <TextBlock Text="SHOW LATEST NOTIFICATION" Style="{StaticResource FieldLabel}" /><TextBox x:Name="NotificationHotkeyBox" />
+                                <TextBlock Text="SNIPPING TOOL" Style="{StaticResource FieldLabel}" /><TextBox x:Name="ScreenshotHotkeyBox" />
+                                <TextBlock Text="EMOJI PICKER" Style="{StaticResource FieldLabel}" /><TextBox x:Name="EmojiHotkeyBox" />
+                                <TextBlock Text="TOGGLE GAMING MODE" Style="{StaticResource FieldLabel}" /><TextBox x:Name="GameModeHotkeyBox" />
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource SurfaceCard}" Margin="0,0,0,14">
+                            <StackPanel>
+                                <TextBlock Text="System equalizer" Style="{StaticResource SectionTitle}" />
+                                <TextBlock Text="A real 10-band system EQ through Equalizer APO. It affects the selected Windows output device." Foreground="{DynamicResource StudioMuted}" FontSize="11" Margin="0,0,0,12" />
+                                <CheckBox x:Name="EqualizerEnabledCheck" Content="Apply Equalizer APO settings" />
+                                <TextBlock Text="EQUALIZER APO CONFIG.TXT" Style="{StaticResource FieldLabel}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                    <TextBox x:Name="EqualizerPathBox" Grid.Column="0" />
+                                    <Button Grid.Column="1" Content="Browse" Click="BrowseEqualizer_Click" Margin="8,0,0,0" />
+                                </Grid>
+                                <UniformGrid Columns="5" Margin="0,16,0,10">
+                                    <StackPanel Margin="5"><TextBlock Text="31 Hz" HorizontalAlignment="Center"/><Slider x:Name="Eq31" Minimum="-12" Maximum="12" Orientation="Vertical" Height="105" Margin="0,7"/><TextBlock Text="SUB" FontSize="9" Foreground="{DynamicResource StudioMuted}" HorizontalAlignment="Center"/></StackPanel>
+                                    <StackPanel Margin="5"><TextBlock Text="62 Hz" HorizontalAlignment="Center"/><Slider x:Name="Eq62" Minimum="-12" Maximum="12" Orientation="Vertical" Height="105" Margin="0,7"/><TextBlock Text="BASS" FontSize="9" Foreground="{DynamicResource StudioMuted}" HorizontalAlignment="Center"/></StackPanel>
+                                    <StackPanel Margin="5"><TextBlock Text="125 Hz" HorizontalAlignment="Center"/><Slider x:Name="Eq125" Minimum="-12" Maximum="12" Orientation="Vertical" Height="105" Margin="0,7"/><TextBlock Text="LOW" FontSize="9" Foreground="{DynamicResource StudioMuted}" HorizontalAlignment="Center"/></StackPanel>
+                                    <StackPanel Margin="5"><TextBlock Text="250 Hz" HorizontalAlignment="Center"/><Slider x:Name="Eq250" Minimum="-12" Maximum="12" Orientation="Vertical" Height="105" Margin="0,7"/><TextBlock Text="WARMTH" FontSize="9" Foreground="{DynamicResource StudioMuted}" HorizontalAlignment="Center"/></StackPanel>
+                                    <StackPanel Margin="5"><TextBlock Text="500 Hz" HorizontalAlignment="Center"/><Slider x:Name="Eq500" Minimum="-12" Maximum="12" Orientation="Vertical" Height="105" Margin="0,7"/><TextBlock Text="LOW MID" FontSize="9" Foreground="{DynamicResource StudioMuted}" HorizontalAlignment="Center"/></StackPanel>
+                                    <StackPanel Margin="5"><TextBlock Text="1 kHz" HorizontalAlignment="Center"/><Slider x:Name="Eq1k" Minimum="-12" Maximum="12" Orientation="Vertical" Height="105" Margin="0,7"/><TextBlock Text="MID" FontSize="9" Foreground="{DynamicResource StudioMuted}" HorizontalAlignment="Center"/></StackPanel>
+                                    <StackPanel Margin="5"><TextBlock Text="2 kHz" HorizontalAlignment="Center"/><Slider x:Name="Eq2k" Minimum="-12" Maximum="12" Orientation="Vertical" Height="105" Margin="0,7"/><TextBlock Text="PRESENCE" FontSize="9" Foreground="{DynamicResource StudioMuted}" HorizontalAlignment="Center"/></StackPanel>
+                                    <StackPanel Margin="5"><TextBlock Text="4 kHz" HorizontalAlignment="Center"/><Slider x:Name="Eq4k" Minimum="-12" Maximum="12" Orientation="Vertical" Height="105" Margin="0,7"/><TextBlock Text="ATTACK" FontSize="9" Foreground="{DynamicResource StudioMuted}" HorizontalAlignment="Center"/></StackPanel>
+                                    <StackPanel Margin="5"><TextBlock Text="8 kHz" HorizontalAlignment="Center"/><Slider x:Name="Eq8k" Minimum="-12" Maximum="12" Orientation="Vertical" Height="105" Margin="0,7"/><TextBlock Text="TREBLE" FontSize="9" Foreground="{DynamicResource StudioMuted}" HorizontalAlignment="Center"/></StackPanel>
+                                    <StackPanel Margin="5"><TextBlock Text="16 kHz" HorizontalAlignment="Center"/><Slider x:Name="Eq16k" Minimum="-12" Maximum="12" Orientation="Vertical" Height="105" Margin="0,7"/><TextBlock Text="AIR" FontSize="9" Foreground="{DynamicResource StudioMuted}" HorizontalAlignment="Center"/></StackPanel>
+                                </UniformGrid>
+                                <TextBlock x:Name="EqualizerStatus" Foreground="{DynamicResource StudioAccent}" FontSize="10" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+
+        <Grid Grid.Row="3" Margin="0,16,0,0">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <TextBlock x:Name="SaveStatus" Text="Settings are stored in %AppData%\IslandDesk" Foreground="{DynamicResource StudioMuted}" FontSize="10" VerticalAlignment="Center" />
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Content="Launch island" Click="LaunchIsland_Click" Margin="0,0,8,0" />
+                <Button Content="Save settings" Background="{DynamicResource StudioAccent}" Foreground="#FF101218" Click="Save_Click" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

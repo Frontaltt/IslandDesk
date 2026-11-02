@@ -1,0 +1,36 @@
+# .NET / Visual Studio
+**/bin/
+**/obj/
+.vs/
+.idea/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build and packaging output
+dist/
+publish-overlay/
+publish-studio/
+msix-stage/
+artifacts/
+*.msix
+*.msixbundle
+*.appx
+
+# Local signing material — NEVER commit private signing keys
+*.pfx
+*.p12
+*.cer
+*.pvk
+
+# Local app data and logs
+settings.json
+*.log
+*.tmp
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
